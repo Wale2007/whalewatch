@@ -160,12 +160,12 @@ export default function SwapPanel({ tokenSymbol, tokenPrice, chain, walletConnec
               placeholder="0.00"
               value={fromAmount}
               onChange={(e) => setFromAmount(e.target.value)}
-              className="flex-1 bg-transparent text-2xl font-display font-bold text-ww-navy placeholder-ww-border-2 outline-none"
+              className="w-0 flex-1 min-w-0 bg-transparent text-2xl font-display font-bold text-ww-navy placeholder-ww-border-2 outline-none"
             />
-            <div className="flex items-center gap-2 rounded-lg bg-white border border-ww-border px-3 py-1.5 shadow-sm">
-              <div className={`h-5 w-5 rounded-full shadow-sm ${chain === 'ethereum' ? 'bg-[#627EEA]' : 'bg-[#F0B90B]'}`} />
+            <div className="flex items-center gap-2 rounded-lg bg-white border border-ww-border px-3 py-1.5 shadow-sm flex-shrink-0">
+              <div className={`h-5 w-5 rounded-full shadow-sm flex-shrink-0 ${chain === 'ethereum' ? 'bg-[#627EEA]' : 'bg-[#F0B90B]'}`} />
               <span className="text-sm font-bold text-ww-navy">{isBuy ? nativeSymbol : tokenSymbol}</span>
-              <ChevronDown className="h-3 w-3 text-ww-muted" />
+              <ChevronDown className="h-3 w-3 text-ww-muted flex-shrink-0" />
             </div>
           </div>
         </div>
@@ -195,12 +195,12 @@ export default function SwapPanel({ tokenSymbol, tokenPrice, chain, walletConnec
               placeholder="0.00"
               value={toAmount}
               readOnly
-              className="flex-1 bg-transparent text-2xl font-display font-bold text-ww-navy/50 placeholder-ww-border-2 outline-none"
+              className="w-0 flex-1 min-w-0 bg-transparent text-2xl font-display font-bold text-ww-navy/50 placeholder-ww-border-2 outline-none"
             />
-            <div className="flex items-center gap-2 rounded-lg bg-white border border-ww-border px-3 py-1.5 shadow-sm">
-              <div className="h-5 w-5 rounded-full bg-gradient-to-br from-blue to-pink shadow-sm" />
+            <div className="flex items-center gap-2 rounded-lg bg-white border border-ww-border px-3 py-1.5 shadow-sm flex-shrink-0">
+              <div className="h-5 w-5 rounded-full bg-gradient-to-br from-blue to-pink shadow-sm flex-shrink-0" />
               <span className="text-sm font-bold text-ww-navy">{isBuy ? tokenSymbol : nativeSymbol}</span>
-              <ChevronDown className="h-3 w-3 text-ww-muted" />
+              <ChevronDown className="h-3 w-3 text-ww-muted flex-shrink-0" />
             </div>
           </div>
         </div>
