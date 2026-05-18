@@ -22,6 +22,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, BarChart as RechartsBarChart,
 import { SkeletonTable, SkeletonCard } from '../components/Skeletons';
 import { scanWhaleTransactions, type ScanResult } from '../services/whaleScanner';
 import { generateWhaleStats } from '../data/mockData';
+import TokenLogo from '../components/TokenLogo';
 import {
   formatCurrency,
   formatNumber,
@@ -29,7 +30,6 @@ import {
   timeAgo,
   getExplorerTxUrl,
   getExplorerAddressUrl,
-  getTokenLogoUrl,
 } from '../utils/format';
 import type { WhaleTransaction, WhaleStats } from '../types';
 
@@ -362,26 +362,12 @@ export default function WhaleIntelDashboard() {
                       </td>
                       <td>
                         <div className="flex items-center gap-3">
-                          {tx.tokenAddress && getTokenLogoUrl(tx.chain, tx.tokenAddress) ? (
-                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white border border-ww-border shadow-sm p-0.5 flex-shrink-0">
-                              <img 
-                                src={getTokenLogoUrl(tx.chain, tx.tokenAddress)} 
-                                alt={tx.tokenSymbol} 
-                                className="h-full w-full object-contain rounded"
-                                onError={(e) => {
-                                  (e.target as HTMLImageElement).style.display = 'none';
-                                  const parent = (e.target as HTMLImageElement).parentElement;
-                                  if (parent) {
-                                    parent.innerHTML = `<span class="text-xs font-bold text-ww-navy">${tx.tokenSymbol.charAt(0)}</span>`;
-                                  }
-                                }}
-                              />
-                            </div>
-                          ) : (
-                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white border border-ww-border shadow-sm text-xs font-bold text-ww-navy flex-shrink-0">
-                              {tx.tokenSymbol.charAt(0)}
-                            </div>
-                          )}
+                          <TokenLogo
+                            chain={tx.chain}
+                            address={tx.tokenAddress}
+                            symbol={tx.tokenSymbol}
+                            size="sm"
+                          />
                           <div>
                             <p className="text-sm font-bold text-ww-navy">{tx.tokenSymbol}</p>
                             <p className="text-[11px] font-medium text-ww-muted">{tx.tokenName}</p>

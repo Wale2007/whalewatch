@@ -11,8 +11,8 @@ import {
   Percent,
   Wallet
 } from 'lucide-react';
+import TokenLogo from '../components/TokenLogo';
 import { formatCurrency, formatNumber, formatPercent } from '../utils/format';
-import { getTokenLogoUrl } from '../utils/format';
 import type { Chain, HotToken } from '../types';
 
 interface MarketsDashboardProps {
@@ -177,26 +177,12 @@ export default function MarketsDashboard({ onSelectToken, onNavigateToTab }: Mar
                       {/* Name & Symbol */}
                       <td className="py-4 px-6">
                         <div className="flex items-center gap-3">
-                          {getTokenLogoUrl(token.chain, token.address) ? (
-                            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-ww-border shadow-sm p-1.5 flex-shrink-0">
-                              <img 
-                                src={getTokenLogoUrl(token.chain, token.address)} 
-                                alt={token.symbol} 
-                                className="h-full w-full object-contain rounded-md"
-                                onError={(e) => {
-                                  (e.target as HTMLImageElement).style.display = 'none';
-                                  const parent = (e.target as HTMLImageElement).parentElement;
-                                  if (parent) {
-                                    parent.innerHTML = `<span class="text-xs font-black text-ww-navy">${token.symbol.charAt(0)}</span>`;
-                                  }
-                                }}
-                              />
-                            </div>
-                          ) : (
-                            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue to-pink text-sm font-black text-white shadow-sm flex-shrink-0">
-                              {token.symbol.charAt(0)}
-                            </div>
-                          )}
+                          <TokenLogo
+                            chain={token.chain}
+                            address={token.address}
+                            symbol={token.symbol}
+                            size="sm"
+                          />
                           <div>
                             <div className="flex items-center gap-2">
                               <span className="text-base font-black text-ww-navy leading-none">{token.name}</span>

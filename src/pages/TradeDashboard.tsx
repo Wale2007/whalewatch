@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import SecurityPanel from '../components/SecurityPanel';
 import SwapPanel from '../components/SwapPanel';
+import TokenLogo from '../components/TokenLogo';
 import { SkeletonCard, SkeletonChart } from '../components/Skeletons';
 import { MOCK_TOKEN, MOCK_SECURITY, generateCandleData } from '../data/mockData';
 import { formatCurrency, formatNumber, formatPercent, truncateAddress, getTokenLogoUrl } from '../utils/format';
@@ -174,6 +175,7 @@ export default function TradeDashboard({ walletConnected, onConnectWallet, selec
               >
                 <option value="ethereum">Ethereum</option>
                 <option value="bsc">BNB Chain</option>
+                <option value="solana">Solana</option>
               </select>
               <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 h-4 w-4 text-ww-muted pointer-events-none" />
             </div>
@@ -182,7 +184,7 @@ export default function TradeDashboard({ walletConnected, onConnectWallet, selec
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-ww-muted" />
               <input
                 type="text"
-                placeholder="Paste token contract address (0x...)"
+                placeholder="Paste token contract address..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
@@ -198,14 +200,8 @@ export default function TradeDashboard({ walletConnected, onConnectWallet, selec
       </motion.div>
 
       {isLoading ? (
-        <div className="space-y-6">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <SkeletonChart className="lg:col-span-2" />
-            <SkeletonCard />
-          </div>
+        <div className="flex min-h-[400px] items-center justify-center">
+          <div className="h-10 w-10 animate-spin rounded-full border-4 border-ww-border border-t-blue" />
         </div>
       ) : tokenData ? (
         <>
@@ -213,26 +209,24 @@ export default function TradeDashboard({ walletConnected, onConnectWallet, selec
           <motion.div variants={itemVariants} className="mb-8">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div className="flex items-center gap-4">
-                {!imageError && logoUrl ? (
-                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white border border-ww-border p-1.5 shadow-md flex-shrink-0">
-                    <img 
-                      src={logoUrl} 
-                      alt={tokenData.symbol} 
-                      className="h-full w-full object-contain rounded-xl"
-                      onError={() => setImageError(true)}
-                    />
-                  </div>
-                ) : (
-                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue to-pink text-2xl font-bold text-white shadow-pink-glow flex-shrink-0">
-                    {tokenData.symbol.charAt(0)}
-                  </div>
-                )}
+                <TokenLogo
+                  chain={tokenData.chain}
+                  address={tokenData.address}
+                  symbol={tokenData.symbol}
+                  size="lg"
+                />
                 <div>
                   <div className="flex items-center gap-3 mb-1.5">
                     <h2 className="font-display text-3xl font-bold tracking-tight text-ww-navy">{tokenData.name}</h2>
                     <span className="badge-blue border border-blue-glow">${tokenData.symbol}</span>
-                    <span className={`badge-${tokenData.chain === 'ethereum' ? 'purple' : 'gold'}`}>
-                      {tokenData.chain === 'ethereum' ? 'ERC-20' : 'BEP-20'}
+                    <span className={`badge-${
+                      tokenData.chain === 'ethereum' ? 'purple' : 
+                      tokenData.chain === 'solana' ? 'indigo' : 
+                      'gold'
+                    }`}>
+                      {tokenData.chain === 'ethereum' ? 'ERC-20' : 
+                       tokenData.chain === 'solana' ? 'SPL' : 
+                       'BEP-20'}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
