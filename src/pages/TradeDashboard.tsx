@@ -249,9 +249,10 @@ export default function TradeDashboard({ walletConnected, onConnectWallet, selec
 
           {/* Main Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Chart Column */}
             <motion.div variants={itemVariants} className="lg:col-span-2 space-y-6">
               <div className="card p-5">
-                <div className="relative rounded-2xl border border-ww-border overflow-hidden bg-ww-card-alt" style={{ height: '450px' }}>
+                <div className="relative rounded-2xl border border-ww-border overflow-hidden bg-ww-card-alt h-[350px] md:h-[450px]">
                   <iframe
                     src={`https://dexscreener.com/${tokenData.chain === 'ethereum' ? 'ethereum' : 'bsc'}/${tokenData.address}?embed=1&theme=light&trades=0&info=0`}
                     style={{ width: '100%', height: '100%', border: 'none' }}
@@ -259,16 +260,17 @@ export default function TradeDashboard({ walletConnected, onConnectWallet, selec
                   />
                 </div>
               </div>
-
-              <div className="lg:hidden">
-                <SwapPanel tokenSymbol={tokenData.symbol} tokenPrice={tokenData.price} chain={tokenData.chain} walletConnected={walletConnected} onConnectWallet={onConnectWallet} />
-              </div>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="space-y-6">
-              <div className="hidden lg:block">
-                <SwapPanel tokenSymbol={tokenData.symbol} tokenPrice={tokenData.price} chain={tokenData.chain} walletConnected={walletConnected} onConnectWallet={onConnectWallet} />
-              </div>
+            {/* Sidebar Column (Swap & Security) */}
+            <motion.div variants={itemVariants} className="space-y-6 lg:col-span-1">
+              <SwapPanel
+                tokenSymbol={tokenData.symbol}
+                tokenPrice={tokenData.price}
+                chain={tokenData.chain}
+                walletConnected={walletConnected}
+                onConnectWallet={onConnectWallet}
+              />
               {securityData && <SecurityPanel data={securityData} />}
             </motion.div>
           </div>
