@@ -1,0 +1,166 @@
+/* ─── Google Fonts ─── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Root & Reset ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: #F4F7FF;
+  color: #0A0F1E;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar          { width: 5px; height: 5px; }
+::-webkit-scrollbar-track    { background: #F4F7FF; }
+::-webkit-scrollbar-thumb    { background: #CCD6F0; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #a0aec0; }
+
+/* ─── Component Layer ─── */
+@layer components {
+
+  /* Cards */
+  .card {
+    @apply rounded-2xl border border-ww-border bg-ww-surface shadow-card;
+  }
+  .card-hover {
+    @apply card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card-md hover:border-ww-border-2;
+  }
+  .card-alt {
+    @apply rounded-2xl border border-ww-border bg-ww-card-alt;
+  }
+
+  /* Buttons */
+  .btn-pink {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-xl bg-pink px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200;
+    box-shadow: 0 4px 14px rgba(255,45,120,0.30);
+  }
+  .btn-pink:hover {
+    @apply brightness-110;
+    box-shadow: 0 6px 20px rgba(255,45,120,0.40);
+    transform: translateY(-1px);
+  }
+  .btn-pink:active { transform: translateY(0); }
+
+  .btn-blue {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-xl bg-blue px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200;
+    box-shadow: 0 4px 14px rgba(22,82,240,0.25);
+  }
+  .btn-blue:hover {
+    @apply brightness-110;
+    box-shadow: 0 6px 20px rgba(22,82,240,0.35);
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-ww-border bg-ww-surface px-5 py-2.5 text-sm font-semibold text-ww-navy transition-all duration-200 hover:border-ww-border-2 hover:bg-ww-card-alt;
+  }
+
+  /* Badges */
+  .badge-pink   { @apply inline-flex items-center gap-1 rounded-lg bg-pink-dim px-2.5 py-1 text-xs font-semibold text-pink; }
+  .badge-blue   { @apply inline-flex items-center gap-1 rounded-lg bg-blue-dim px-2.5 py-1 text-xs font-semibold text-blue; }
+  .badge-profit { @apply inline-flex items-center gap-1 rounded-lg bg-profit-dim px-2.5 py-1 text-xs font-semibold text-profit; }
+  .badge-loss   { @apply inline-flex items-center gap-1 rounded-lg bg-loss-dim px-2.5 py-1 text-xs font-semibold text-loss; }
+  .badge-purple { @apply inline-flex items-center gap-1 rounded-lg bg-purple-dim px-2.5 py-1 text-xs font-semibold text-purple; }
+  .badge-gold   { @apply inline-flex items-center gap-1 rounded-lg bg-gold-dim px-2.5 py-1 text-xs font-semibold text-gold; }
+
+  /* Stats */
+  .stat-label { @apply text-xs font-medium uppercase tracking-widest text-ww-muted; }
+  .stat-value { @apply font-display text-2xl font-bold text-ww-navy; }
+
+  /* Profit / Loss text */
+  .text-profit { @apply text-[#00C087] font-semibold; }
+  .text-loss   { @apply text-[#FF4747] font-semibold; }
+}
+
+/* ─── Ticker ─── */
+.ticker-wrapper { overflow: hidden; white-space: nowrap; }
+.ticker-content {
+  display: inline-block;
+  animation: tickerScroll 45s linear infinite;
+}
+.ticker-content:hover { animation-play-state: paused; }
+
+/* ─── Skeleton ─── */
+.skeleton {
+  background: linear-gradient(90deg, #EEF2FF 25%, #E4EAFF 50%, #EEF2FF 75%);
+  background-size: 400px 100%;
+  animation: shimmer 1.8s infinite;
+  border-radius: 8px;
+}
+
+/* ─── Divider gradient ─── */
+.gradient-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #E4EAFF 30%, #E4EAFF 70%, transparent);
+}
+
+/* ─── Noise texture overlay on hero elements ─── */
+.noise-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* ─── Table ─── */
+.ww-table th {
+  @apply border-b border-ww-border bg-ww-card-alt px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-widest text-ww-muted;
+}
+.ww-table td {
+  @apply border-b border-ww-border px-4 py-3.5;
+}
+.ww-table tbody tr {
+  @apply transition-colors duration-150;
+}
+.ww-table tbody tr:hover {
+  @apply bg-ww-card-alt;
+}
+.ww-table tbody tr:last-child td {
+  @apply border-0;
+}
+
+/* ─── Pink-Blue gradient text utility ─── */
+.gradient-text {
+  background: linear-gradient(135deg, #1652F0 0%, #FF2D78 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Dot grid background ─── */
+.dot-grid {
+  background-image: radial-gradient(circle, #D0D9F0 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* ─── Ambient gradient blobs ─── */
+.blob-pink {
+  position: fixed;
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,45,120,0.055) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+.blob-blue {
+  position: fixed;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(22,82,240,0.05) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
