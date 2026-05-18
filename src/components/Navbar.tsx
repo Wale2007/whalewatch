@@ -31,7 +31,8 @@ export default function Navbar({ activeTab, onTabChange, walletConnected, wallet
           whileTap={{ scale: 0.99 }}
           onClick={() => onTabChange('trade')}
         >
-          <img src="/logo.svg" alt="WhaleWatch" className="h-9 w-auto" />
+          <img src="/whale-icon.svg" alt="WhaleWatch" className="h-8 w-auto md:hidden" />
+          <img src="/logo.svg" alt="WhaleWatch" className="hidden md:block h-9 w-auto" />
         </motion.button>
 
         {/* Desktop Tabs */}
@@ -90,12 +91,15 @@ export default function Navbar({ activeTab, onTabChange, walletConnected, wallet
                       return (
                         <motion.button
                           onClick={openConnectModal}
-                          className="btn-pink text-sm"
+                          className="btn-pink px-3 py-1.5 sm:px-5 sm:py-2.5 text-xs sm:text-sm whitespace-nowrap"
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                         >
-                          <Wallet className="h-4 w-4" />
-                          Connect Wallet
+                          <Wallet className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
+                          <span>
+                            <span className="inline sm:hidden">Connect</span>
+                            <span className="hidden sm:inline">Connect Wallet</span>
+                          </span>
                         </motion.button>
                       );
                     }
@@ -104,11 +108,14 @@ export default function Navbar({ activeTab, onTabChange, walletConnected, wallet
                       return (
                         <motion.button
                           onClick={openChainModal}
-                          className="btn-pink !bg-loss text-sm"
+                          className="btn-pink !bg-loss px-3 py-1.5 sm:px-5 sm:py-2.5 text-xs sm:text-sm whitespace-nowrap"
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                         >
-                          Wrong Network
+                          <span>
+                            <span className="inline sm:hidden">Wrong Net</span>
+                            <span className="hidden sm:inline">Wrong Network</span>
+                          </span>
                         </motion.button>
                       );
                     }
@@ -149,11 +156,11 @@ export default function Navbar({ activeTab, onTabChange, walletConnected, wallet
                         {/* Connected address wallet pill */}
                         <motion.button
                           onClick={openAccountModal}
-                          className="btn-ghost !border-profit/40 !text-profit text-sm"
+                          className="btn-ghost !border-profit/40 !text-profit px-3 py-1.5 sm:px-5 sm:py-2 text-xs sm:text-sm whitespace-nowrap"
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                         >
-                          <Zap className="h-4 w-4" />
+                          <Zap className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
                           {account.displayName}
                         </motion.button>
                       </div>

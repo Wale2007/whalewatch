@@ -69,17 +69,21 @@ export default function LandingPage({ onEnterApp }: LandingPageProps) {
       {/* Header / Navbar */}
       <header className="relative z-20 w-full border-b border-ww-border bg-white/70 backdrop-blur-xl py-4 px-6 lg:px-12 flex justify-between items-center">
         <div className="flex items-center">
-          <img src="/logo.svg" alt="WhaleWatch Logo" className="h-10 w-auto" />
+          <img src="/whale-icon.svg" alt="WhaleWatch" className="h-8 w-auto md:hidden" />
+          <img src="/logo.svg" alt="WhaleWatch" className="hidden md:block h-10 w-auto" />
         </div>
         <div>
           <motion.button
             onClick={onEnterApp}
-            className="btn-pink flex items-center gap-2 group text-sm shadow-pink-glow"
+            className="btn-pink flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-5 sm:py-2.5 text-xs sm:text-sm group shadow-pink-glow whitespace-nowrap"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
           >
-            Launch Terminal
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            <span>
+              <span className="inline sm:hidden">Launch</span>
+              <span className="hidden sm:inline">Launch Terminal</span>
+            </span>
+            <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 transition-transform group-hover:translate-x-1 flex-shrink-0" />
           </motion.button>
         </div>
       </header>
