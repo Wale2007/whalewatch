@@ -46,6 +46,7 @@ export default function TradeDashboard({ walletConnected, onConnectWallet, selec
   const [securityData, setSecurityData] = useState<SecurityResult | null>(null);
   const [candleData, setCandleData] = useState<CandleData[]>([]);
   const [copied, setCopied] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   // Load token data on mount OR when selectedToken prop changes
   useEffect(() => {
@@ -78,6 +79,7 @@ export default function TradeDashboard({ walletConnected, onConnectWallet, selec
       });
       setSecurityData(MOCK_SECURITY);
       setCandleData(generateCandleData(14));
+      setImageError(false);
       setIsLoading(false);
     }, 600);
 
@@ -104,6 +106,7 @@ export default function TradeDashboard({ walletConnected, onConnectWallet, selec
       });
       setSecurityData(MOCK_SECURITY);
       setCandleData(generateCandleData(14));
+      setImageError(false);
       setIsLoading(false);
     }, 800);
   };
@@ -181,12 +184,13 @@ export default function TradeDashboard({ walletConnected, onConnectWallet, selec
           <motion.div variants={itemVariants} className="mb-8">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div className="flex items-center gap-4">
-                {getTokenLogoUrl(tokenData.symbol) ? (
+                {!imageError && getTokenLogoUrl(tokenData.chain, tokenData.address) ? (
                   <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white border border-ww-border p-1.5 shadow-md flex-shrink-0">
                     <img 
-                      src={getTokenLogoUrl(tokenData.symbol)} 
+                      src={getTokenLogoUrl(tokenData.chain, tokenData.address)} 
                       alt={tokenData.symbol} 
                       className="h-full w-full object-contain rounded-xl"
+                      onError={() => setImageError(true)}
                     />
                   </div>
                 ) : (

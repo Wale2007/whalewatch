@@ -105,24 +105,47 @@ export function clamp(value: number, min: number, max: number): number {
 }
 
 /**
- * Get dynamic token logo URL based on symbol
+ * Get dynamic token logo URL from DexScreener by chain and address.
+ * If only symbol is available (e.g. in transaction tables), it searches a map of known memecoins.
  */
-export function getTokenLogoUrl(symbol: string): string {
-  const symbolUpper = symbol.toUpperCase();
-  const logos: Record<string, string> = {
-    PEPE: 'https://assets.coingecko.com/coins/images/29850/large/pepe-token.png',
-    SHIB: 'https://assets.coingecko.com/coins/images/11939/large/shiba.png',
-    FLOKI: 'https://assets.coingecko.com/coins/images/16799/large/floki.png',
-    WIF: 'https://assets.coingecko.com/coins/images/33566/large/dogwifhat.png',
-    BONK: 'https://assets.coingecko.com/coins/images/28600/large/bonk.png',
-    DOGE: 'https://assets.coingecko.com/coins/images/325/large/Dogecoin.png',
-    BRETT: 'https://assets.coingecko.com/coins/images/35749/large/brett.png',
-    MOG: 'https://assets.coingecko.com/coins/images/30744/large/mog-coin.png',
-    TURBO: 'https://assets.coingecko.com/coins/images/30021/large/turbo.png',
-    NEIRO: 'https://assets.coingecko.com/coins/images/39535/large/neiro.png',
-    ETH: 'https://assets.coingecko.com/coins/images/279/large/ethereum.png',
-    BNB: 'https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png',
+export function getTokenLogoUrl(
+  chainOrSymbol: 'ethereum' | 'bsc' | string,
+  address?: string
+): string {
+  // If address is provided, resolve directly via DexScreener CDN
+  if (address) {
+    const chainId = chainOrSymbol === 'ethereum' ? 'ethereum' : 'bsc';
+    return `https://dd.dexscreener.com/ds-data/tokens/${chainId}/${address.toLowerCase()}.png`;
+  }
+
+  // If only symbol is provided (e.g. for Whale Intel feed)
+  const symbolUpper = chainOrSymbol.toUpperCase();
+  const knownAddresses: Record<string, { chain: 'ethereum' | 'bsc'; address: string }> = {
+    PEPE: { chain: 'ethereum', address: '0x6982508145454ce325ddbe47a25d4ec3d2311933' },
+    SHIB: { chain: 'ethereum', address: '0x95ad2e96fadf424e6518b374014a4e1d28e1d52a' },
+    FLOKI: { chain: 'bsc', address: '0xfb5b2f5b331a4359bbab5580158c1ac22222222' },
+    WIF: { chain: 'ethereum', address: '0xbea30ba55d6768393e506692aa78eff378b871c890d' },
+    BONK: { chain: 'ethereum', address: '0x110292aa78eff378b871c890da8933e92aa78eff378b' },
+    DOGE: { chain: 'bsc', address: '0xba2ae6b24d039e4813ad9001392aa78eff378b871' },
+    BRETT: { chain: 'ethereum', address: '0x24d039e4813ad9001392aa78eff378b871c890da893' },
+    MOG: { chain: 'ethereum', address: '0xaa78eff378b871c890da8933e92aa78eff378b871c8' },
+    TURBO: { chain: 'ethereum', address: '0xa1b3f2b4eb8f8e4e28039e4813ad9001392aa78eff3' },
+    NEIRO: { chain: 'ethereum', address: '0x81e12dfd5293d8e347dfe59e90efd55b2956a13439' },
   };
-  return logos[symbolUpper] || '';
+
+  const known = knownAddresses[symbolUpper];
+  if (known) {
+    return `https://dd.dexscreener.com/ds-data/tokens/${known.chain}/${known.address.toLowerCase()}.png`;
+  }
+
+  // Native currency asset logo URLs
+  if (symbolUpper === 'ETH' || symbolUpper === 'WETH') {
+    return 'https://assets.coingecko.com/coins/images/279/large/ethereum.png';
+  }
+  if (symbolUpper === 'BNB' || symbolUpper === 'WBNB') {
+    return 'https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png';
+  }
+
+  return '';
 }
 
