@@ -3,7 +3,7 @@ export interface TokenData {
   name: string;
   symbol: string;
   address: string;
-  chain: 'ethereum' | 'bsc';
+  chain: 'ethereum' | 'bsc' | 'solana';
   price: number;
   priceChange24h: number;
   marketCap: number;
@@ -72,12 +72,12 @@ export interface HotToken {
   price: number;
   change24h: number;
   logo?: string;
-  chain: 'ethereum' | 'bsc';
+  chain: 'ethereum' | 'bsc' | 'solana';
   address: string;
 }
 
 // ===== Chain Type =====
-export type Chain = 'ethereum' | 'bsc';
+export type Chain = 'ethereum' | 'bsc' | 'solana';
 
 export interface ChainInfo {
   id: string;

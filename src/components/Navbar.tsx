@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { TrendingUp, Eye, Wallet, Menu, X, Zap, ChevronDown } from 'lucide-react';
+import { TrendingUp, Eye, Wallet, Menu, X, Zap, ChevronDown, Layers } from 'lucide-react';
 import { truncateAddress } from '../utils/format';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 interface NavbarProps {
-  activeTab: 'trade' | 'whale';
-  onTabChange: (tab: 'trade' | 'whale') => void;
+  activeTab: 'trade' | 'whale' | 'markets';
+  onTabChange: (tab: 'trade' | 'whale' | 'markets') => void;
   walletConnected: boolean;
   walletAddress: string | null;
   onConnectWallet: () => void;
@@ -16,8 +16,9 @@ export default function Navbar({ activeTab, onTabChange, walletConnected, wallet
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const tabs = [
-    { id: 'trade' as const, label: 'Trade',      icon: TrendingUp },
-    { id: 'whale' as const, label: 'Whale Intel', icon: Eye },
+    { id: 'markets' as const, label: 'Markets',     icon: Layers },
+    { id: 'trade' as const, label: 'Trade',       icon: TrendingUp },
+    { id: 'whale' as const, label: 'Whale Intel',  icon: Eye },
   ];
 
   return (
@@ -29,7 +30,7 @@ export default function Navbar({ activeTab, onTabChange, walletConnected, wallet
           className="flex items-center"
           whileHover={{ scale: 1.01 }}
           whileTap={{ scale: 0.99 }}
-          onClick={() => onTabChange('trade')}
+          onClick={() => onTabChange('markets')}
         >
           <img src="/whale-icon.svg" alt="WhaleWatch" className="h-8 w-auto md:hidden" />
           <img src="/logo.svg" alt="WhaleWatch" className="hidden md:block h-9 w-auto" />

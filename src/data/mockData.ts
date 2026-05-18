@@ -18,19 +18,27 @@ export const CHAINS: Record<string, ChainInfo> = {
     nativeSymbol: 'BNB',
     color: '#F0B90B',
   },
+  solana: {
+    id: 'solana',
+    name: 'Solana',
+    shortName: 'SOL',
+    explorerUrl: 'https://solscan.io',
+    nativeSymbol: 'SOL',
+    color: '#9945FF',
+  },
 };
 
 // ===== Hot Tokens =====
 export const HOT_TOKENS: HotToken[] = [
+  { symbol: 'SOL', name: 'Solana', price: 174.52, change24h: 5.4, chain: 'solana', address: 'So11111111111111111111111111111111111111112' },
+  { symbol: 'WIF', name: 'dogwifhat', price: 2.34, change24h: 15.3, chain: 'solana', address: 'EKpQGSJtjMFqKZ9KQGWjh65KUYdugauUpEeWE1tXm9k' },
+  { symbol: 'BONK', name: 'Bonk', price: 0.00002789, change24h: -1.8, chain: 'solana', address: 'DezXAZ8z7PnrnESzzSJ4bF6PgRVwHTDFUC3ocqi3mJXC' },
+  { symbol: 'POPCAT', name: 'Popcat', price: 1.45, change24h: 8.9, chain: 'solana', address: '7GCihJUkfj2th4mrTuJAhBXtXnFM4mR9G2yXPd8gjug6' },
   { symbol: 'PEPE', name: 'Pepe', price: 0.00001247, change24h: 12.4, chain: 'ethereum', address: '0x6982508145454Ce325dDbE47a25d4ec3d2311933' },
   { symbol: 'SHIB', name: 'Shiba Inu', price: 0.00002156, change24h: -3.2, chain: 'ethereum', address: '0x95aD2E96FAdf424E6518b374014A4e1D28e1d52A' },
   { symbol: 'FLOKI', name: 'Floki', price: 0.0001834, change24h: 8.7, chain: 'bsc', address: '0xfb5b2f5b331a4359bbab5580158c1ac22222222' },
-  { symbol: 'WIF', name: 'dogwifhat', price: 2.34, change24h: 15.3, chain: 'ethereum', address: '0xbea30ba55d6768393e506692aa78eff378b871c890d' },
-  { symbol: 'BONK', name: 'Bonk', price: 0.00002789, change24h: -1.8, chain: 'ethereum', address: '0x110292aa78eff378b871c890da8933e92aa78eff378b' },
   { symbol: 'DOGE', name: 'Dogecoin', price: 0.1523, change24h: 4.6, chain: 'bsc', address: '0xba2ae6b24d039e4813ad9001392aa78eff378b871' },
   { symbol: 'BRETT', name: 'Brett', price: 0.1245, change24h: 22.1, chain: 'ethereum', address: '0x24d039e4813ad9001392aa78eff378b871c890da893' },
-  { symbol: 'MOG', name: 'Mog Coin', price: 0.000002341, change24h: -5.4, chain: 'ethereum', address: '0xaa78eff378b871c890da8933e92aa78eff378b871c8' },
-  { symbol: 'TURBO', name: 'Turbo', price: 0.00876, change24h: 9.2, chain: 'ethereum', address: '0xa1b3f2b4eb8f8e4e28039e4813ad9001392aa78eff3' },
   { symbol: 'NEIRO', name: 'Neiro', price: 0.00156, change24h: 31.5, chain: 'ethereum', address: '0x81e12DFd5293D8e347dFe59E90eFd55b2956a13439' },
 ];
 

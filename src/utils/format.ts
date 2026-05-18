@@ -108,42 +108,58 @@ export function clamp(value: number, min: number, max: number): number {
  * Get dynamic token logo URL from DexScreener by chain and address.
  * If only symbol is available (e.g. in transaction tables), it searches a map of known memecoins.
  */
+/**
+ * Get dynamic token logo URL from highly comprehensive DeFi CDNs.
+ * - Solana tokens are queried from Jupiter's official open logo CDN.
+ * - Ethereum / BSC tokens are queried from 1inch's open public token logo CDN.
+ */
 export function getTokenLogoUrl(
-  chainOrSymbol: 'ethereum' | 'bsc' | string,
+  chainOrSymbol: 'ethereum' | 'bsc' | 'solana' | string,
   address?: string
 ): string {
-  // If address is provided, resolve directly via DexScreener CDN
+  // If address and chain is provided, resolve directly via elite DeFi CDNs (Jupiter / 1inch)
   if (address) {
-    const chainId = chainOrSymbol === 'ethereum' ? 'ethereum' : 'bsc';
-    return `https://dd.dexscreener.com/ds-data/tokens/${chainId}/${address.toLowerCase()}.png`;
+    const cleanAddress = address.trim();
+    if (chainOrSymbol === 'solana') {
+      return `https://cdn.jupiter.ag/tokens/${cleanAddress}.png`;
+    }
+    // Ethereum / BSC / general EVM chains use 1inch dynamic CDN
+    return `https://tokens.1inch.io/${cleanAddress.toLowerCase()}.png`;
   }
 
   // If only symbol is provided (e.g. for Whale Intel feed)
   const symbolUpper = chainOrSymbol.toUpperCase();
-  const knownAddresses: Record<string, { chain: 'ethereum' | 'bsc'; address: string }> = {
+  
+  // Dynamic native chain logo URLs
+  if (symbolUpper === 'ETH' || symbolUpper === 'WETH') {
+    return 'https://tokens.1inch.io/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2.png';
+  }
+  if (symbolUpper === 'BNB' || symbolUpper === 'WBNB') {
+    return 'https://tokens.1inch.io/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c.png';
+  }
+  if (symbolUpper === 'SOL' || symbolUpper === 'WSOL') {
+    return 'https://cdn.jupiter.ag/tokens/So11111111111111111111111111111111111111112.png';
+  }
+
+  // Hot memecoin addresses lookup
+  const knownAddresses: Record<string, { chain: 'ethereum' | 'bsc' | 'solana'; address: string }> = {
     PEPE: { chain: 'ethereum', address: '0x6982508145454ce325ddbe47a25d4ec3d2311933' },
     SHIB: { chain: 'ethereum', address: '0x95ad2e96fadf424e6518b374014a4e1d28e1d52a' },
     FLOKI: { chain: 'bsc', address: '0xfb5b2f5b331a4359bbab5580158c1ac22222222' },
-    WIF: { chain: 'ethereum', address: '0xbea30ba55d6768393e506692aa78eff378b871c890d' },
-    BONK: { chain: 'ethereum', address: '0x110292aa78eff378b871c890da8933e92aa78eff378b' },
+    WIF: { chain: 'solana', address: 'EKpQGSJtjMFqKZ9KQGWjh65KUYdugauUpEeWE1tXm9k' },
+    BONK: { chain: 'solana', address: 'DezXAZ8z7PnrnESzzSJ4bF6PgRVwHTDFUC3ocqi3mJXC' },
+    POPCAT: { chain: 'solana', address: '7GCihJUkfj2th4mrTuJAhBXtXnFM4mR9G2yXPd8gjug6' },
     DOGE: { chain: 'bsc', address: '0xba2ae6b24d039e4813ad9001392aa78eff378b871' },
     BRETT: { chain: 'ethereum', address: '0x24d039e4813ad9001392aa78eff378b871c890da893' },
-    MOG: { chain: 'ethereum', address: '0xaa78eff378b871c890da8933e92aa78eff378b871c8' },
-    TURBO: { chain: 'ethereum', address: '0xa1b3f2b4eb8f8e4e28039e4813ad9001392aa78eff3' },
     NEIRO: { chain: 'ethereum', address: '0x81e12dfd5293d8e347dfe59e90efd55b2956a13439' },
   };
 
   const known = knownAddresses[symbolUpper];
   if (known) {
-    return `https://dd.dexscreener.com/ds-data/tokens/${known.chain}/${known.address.toLowerCase()}.png`;
-  }
-
-  // Native currency asset logo URLs
-  if (symbolUpper === 'ETH' || symbolUpper === 'WETH') {
-    return 'https://assets.coingecko.com/coins/images/279/large/ethereum.png';
-  }
-  if (symbolUpper === 'BNB' || symbolUpper === 'WBNB') {
-    return 'https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png';
+    if (known.chain === 'solana') {
+      return `https://cdn.jupiter.ag/tokens/${known.address}.png`;
+    }
+    return `https://tokens.1inch.io/${known.address.toLowerCase()}.png`;
   }
 
   return '';

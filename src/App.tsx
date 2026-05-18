@@ -4,12 +4,13 @@ import Navbar from './components/Navbar';
 import TickerTape from './components/TickerTape';
 import TradeDashboard from './pages/TradeDashboard';
 import WhaleIntelDashboard from './pages/WhaleIntelDashboard';
+import MarketsDashboard from './pages/MarketsDashboard';
 import LandingPage from './pages/LandingPage';
 import { useAccount } from 'wagmi';
 
 import type { HotToken } from './types';
 
-type ActiveTab = 'trade' | 'whale';
+type ActiveTab = 'trade' | 'whale' | 'markets';
 
 const pageVariants = {
   initial: { opacity: 0, y: 16 },
@@ -19,7 +20,7 @@ const pageVariants = {
 
 export default function App() {
   const [showLanding, setShowLanding] = useState(true);
-  const [activeTab, setActiveTab] = useState<ActiveTab>('trade');
+  const [activeTab, setActiveTab] = useState<ActiveTab>('markets');
   const [selectedHotToken, setSelectedHotToken] = useState<HotToken | null>(null);
   const { isConnected, address } = useAccount();
 
@@ -76,7 +77,20 @@ export default function App() {
       {/* Page Content */}
       <main className="relative z-10">
         <AnimatePresence mode="wait">
-          {activeTab === 'trade' ? (
+          {activeTab === 'markets' ? (
+            <motion.div
+              key="markets"
+              variants={pageVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+            >
+              <MarketsDashboard
+                onSelectToken={setSelectedHotToken}
+                onNavigateToTab={setActiveTab}
+              />
+            </motion.div>
+          ) : activeTab === 'trade' ? (
             <motion.div
               key="trade"
               variants={pageVariants}
