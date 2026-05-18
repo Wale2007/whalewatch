@@ -29,6 +29,7 @@ import {
   timeAgo,
   getExplorerTxUrl,
   getExplorerAddressUrl,
+  getTokenLogoUrl,
 } from '../utils/format';
 import type { WhaleTransaction, WhaleStats } from '../types';
 
@@ -361,9 +362,19 @@ export default function WhaleIntelDashboard() {
                       </td>
                       <td>
                         <div className="flex items-center gap-3">
-                          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white border border-ww-border shadow-sm text-xs font-bold text-ww-navy">
-                            {tx.tokenSymbol.charAt(0)}
-                          </div>
+                          {getTokenLogoUrl(tx.tokenSymbol) ? (
+                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white border border-ww-border shadow-sm p-0.5 flex-shrink-0">
+                              <img 
+                                src={getTokenLogoUrl(tx.tokenSymbol)} 
+                                alt={tx.tokenSymbol} 
+                                className="h-full w-full object-contain rounded"
+                              />
+                            </div>
+                          ) : (
+                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white border border-ww-border shadow-sm text-xs font-bold text-ww-navy flex-shrink-0">
+                              {tx.tokenSymbol.charAt(0)}
+                            </div>
+                          )}
                           <div>
                             <p className="text-sm font-bold text-ww-navy">{tx.tokenSymbol}</p>
                             <p className="text-[11px] font-medium text-ww-muted">{tx.tokenName}</p>

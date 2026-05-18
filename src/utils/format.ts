@@ -103,3 +103,26 @@ export function getChangeColor(value: number): string {
 export function clamp(value: number, min: number, max: number): number {
   return Math.min(Math.max(value, min), max);
 }
+
+/**
+ * Get dynamic token logo URL based on symbol
+ */
+export function getTokenLogoUrl(symbol: string): string {
+  const symbolUpper = symbol.toUpperCase();
+  const logos: Record<string, string> = {
+    PEPE: 'https://assets.coingecko.com/coins/images/29850/large/pepe-token.png',
+    SHIB: 'https://assets.coingecko.com/coins/images/11939/large/shiba.png',
+    FLOKI: 'https://assets.coingecko.com/coins/images/16799/large/floki.png',
+    WIF: 'https://assets.coingecko.com/coins/images/33566/large/dogwifhat.png',
+    BONK: 'https://assets.coingecko.com/coins/images/28600/large/bonk.png',
+    DOGE: 'https://assets.coingecko.com/coins/images/325/large/Dogecoin.png',
+    BRETT: 'https://assets.coingecko.com/coins/images/35749/large/brett.png',
+    MOG: 'https://assets.coingecko.com/coins/images/30744/large/mog-coin.png',
+    TURBO: 'https://assets.coingecko.com/coins/images/30021/large/turbo.png',
+    NEIRO: 'https://assets.coingecko.com/coins/images/39535/large/neiro.png',
+    ETH: 'https://assets.coingecko.com/coins/images/279/large/ethereum.png',
+    BNB: 'https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png',
+  };
+  return logos[symbolUpper] || '';
+}
+

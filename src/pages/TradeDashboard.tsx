@@ -18,7 +18,7 @@ import SecurityPanel from '../components/SecurityPanel';
 import SwapPanel from '../components/SwapPanel';
 import { SkeletonCard, SkeletonChart } from '../components/Skeletons';
 import { MOCK_TOKEN, MOCK_SECURITY, generateCandleData } from '../data/mockData';
-import { formatCurrency, formatNumber, formatPercent, truncateAddress } from '../utils/format';
+import { formatCurrency, formatNumber, formatPercent, truncateAddress, getTokenLogoUrl } from '../utils/format';
 import type { TokenData, SecurityResult, CandleData, Chain, HotToken } from '../types';
 
 interface TradeDashboardProps {
@@ -181,9 +181,19 @@ export default function TradeDashboard({ walletConnected, onConnectWallet, selec
           <motion.div variants={itemVariants} className="mb-8">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div className="flex items-center gap-4">
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue to-pink text-2xl font-bold text-white shadow-pink-glow">
-                  {tokenData.symbol.charAt(0)}
-                </div>
+                {getTokenLogoUrl(tokenData.symbol) ? (
+                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white border border-ww-border p-1.5 shadow-md flex-shrink-0">
+                    <img 
+                      src={getTokenLogoUrl(tokenData.symbol)} 
+                      alt={tokenData.symbol} 
+                      className="h-full w-full object-contain rounded-xl"
+                    />
+                  </div>
+                ) : (
+                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue to-pink text-2xl font-bold text-white shadow-pink-glow flex-shrink-0">
+                    {tokenData.symbol.charAt(0)}
+                  </div>
+                )}
                 <div>
                   <div className="flex items-center gap-3 mb-1.5">
                     <h2 className="font-display text-3xl font-bold tracking-tight text-ww-navy">{tokenData.name}</h2>
