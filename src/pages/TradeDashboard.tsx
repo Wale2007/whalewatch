@@ -47,6 +47,7 @@ export default function TradeDashboard({ walletConnected, onConnectWallet, selec
   const [candleData, setCandleData] = useState<CandleData[]>([]);
   const [copied, setCopied] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const [logoUrl, setLogoUrl] = useState('');
 
   // Load token data on mount OR when selectedToken prop changes
   useEffect(() => {
@@ -62,6 +63,21 @@ export default function TradeDashboard({ walletConnected, onConnectWallet, selec
 
     setSearchQuery(targetToken.address);
     setSelectedChain(targetToken.chain);
+    setLogoUrl('');
+    setImageError(false);
+
+    // Fetch dynamic DexScreener API logo
+    fetch(`https://api.dexscreener.com/latest/dex/tokens/${targetToken.address}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.pairs && data.pairs.length > 0) {
+          const pair = data.pairs[0];
+          if (pair.info && pair.info.imageUrl) {
+            setLogoUrl(pair.info.imageUrl);
+          }
+        }
+      })
+      .catch(err => console.error("Error fetching token logo:", err));
 
     const timer = setTimeout(() => {
       setTokenData({
@@ -79,7 +95,6 @@ export default function TradeDashboard({ walletConnected, onConnectWallet, selec
       });
       setSecurityData(MOCK_SECURITY);
       setCandleData(generateCandleData(14));
-      setImageError(false);
       setIsLoading(false);
     }, 600);
 
@@ -89,6 +104,21 @@ export default function TradeDashboard({ walletConnected, onConnectWallet, selec
   const handleSearch = () => {
     if (!searchQuery.trim()) return;
     setIsLoading(true);
+    setLogoUrl('');
+    setImageError(false);
+
+    fetch(`https://api.dexscreener.com/latest/dex/tokens/${searchQuery}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.pairs && data.pairs.length > 0) {
+          const pair = data.pairs[0];
+          if (pair.info && pair.info.imageUrl) {
+            setLogoUrl(pair.info.imageUrl);
+          }
+        }
+      })
+      .catch(err => console.error("Error searching token logo:", err));
+
     setTimeout(() => {
       onSelectToken(null); // Clear selected token to prevent state mismatch
       setTokenData({
@@ -106,7 +136,6 @@ export default function TradeDashboard({ walletConnected, onConnectWallet, selec
       });
       setSecurityData(MOCK_SECURITY);
       setCandleData(generateCandleData(14));
-      setImageError(false);
       setIsLoading(false);
     }, 800);
   };
@@ -184,10 +213,10 @@ export default function TradeDashboard({ walletConnected, onConnectWallet, selec
           <motion.div variants={itemVariants} className="mb-8">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div className="flex items-center gap-4">
-                {!imageError && getTokenLogoUrl(tokenData.chain, tokenData.address) ? (
+                {!imageError && logoUrl ? (
                   <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white border border-ww-border p-1.5 shadow-md flex-shrink-0">
                     <img 
-                      src={getTokenLogoUrl(tokenData.chain, tokenData.address)} 
+                      src={logoUrl} 
                       alt={tokenData.symbol} 
                       className="h-full w-full object-contain rounded-xl"
                       onError={() => setImageError(true)}
