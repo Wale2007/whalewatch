@@ -362,12 +362,19 @@ export default function WhaleIntelDashboard() {
                       </td>
                       <td>
                         <div className="flex items-center gap-3">
-                          {getTokenLogoUrl(tx.tokenSymbol) ? (
+                          {tx.tokenAddress && getTokenLogoUrl(tx.chain, tx.tokenAddress) ? (
                             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white border border-ww-border shadow-sm p-0.5 flex-shrink-0">
                               <img 
-                                src={getTokenLogoUrl(tx.tokenSymbol)} 
+                                src={getTokenLogoUrl(tx.chain, tx.tokenAddress)} 
                                 alt={tx.tokenSymbol} 
                                 className="h-full w-full object-contain rounded"
+                                onError={(e) => {
+                                  (e.target as HTMLImageElement).style.display = 'none';
+                                  const parent = (e.target as HTMLImageElement).parentElement;
+                                  if (parent) {
+                                    parent.innerHTML = `<span class="text-xs font-bold text-ww-navy">${tx.tokenSymbol.charAt(0)}</span>`;
+                                  }
+                                }}
                               />
                             </div>
                           ) : (

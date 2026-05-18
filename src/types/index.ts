@@ -53,6 +53,7 @@ export interface WhaleTransaction {
   walletAddress: string;
   txHash: string;
   direction: 'buy' | 'sell' | 'in' | 'out';
+  tokenAddress?: string;
 }
 
 export interface WhaleStats {
