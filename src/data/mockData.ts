@@ -31,15 +31,15 @@ export const CHAINS: Record<string, ChainInfo> = {
 // ===== Hot Tokens =====
 export const HOT_TOKENS: HotToken[] = [
   { symbol: 'SOL', name: 'Solana', price: 174.52, change24h: 5.4, chain: 'solana', address: 'So11111111111111111111111111111111111111112' },
-  { symbol: 'WIF', name: 'dogwifhat', price: 2.34, change24h: 15.3, chain: 'solana', address: 'EKpQGSJtjMFqKZ9KQGWjh65KUYdugauUpEeWE1tXm9k' },
-  { symbol: 'BONK', name: 'Bonk', price: 0.00002789, change24h: -1.8, chain: 'solana', address: 'DezXAZ8z7PnrnESzzSJ4bF6PgRVwHTDFUC3ocqi3mJXC' },
-  { symbol: 'POPCAT', name: 'Popcat', price: 1.45, change24h: 8.9, chain: 'solana', address: '7GCihJUkfj2th4mrTuJAhBXtXnFM4mR9G2yXPd8gjug6' },
-  { symbol: 'PEPE', name: 'Pepe', price: 0.00001247, change24h: 12.4, chain: 'ethereum', address: '0x6982508145454Ce325dDbE47a25d4ec3d2311933' },
-  { symbol: 'SHIB', name: 'Shiba Inu', price: 0.00002156, change24h: -3.2, chain: 'ethereum', address: '0x95aD2E96FAdf424E6518b374014A4e1D28e1d52A' },
-  { symbol: 'FLOKI', name: 'Floki', price: 0.0001834, change24h: 8.7, chain: 'bsc', address: '0xfb5b2f5b331a4359bbab5580158c1ac22222222' },
-  { symbol: 'DOGE', name: 'Dogecoin', price: 0.1523, change24h: 4.6, chain: 'bsc', address: '0xba2ae6b24d039e4813ad9001392aa78eff378b871' },
-  { symbol: 'BRETT', name: 'Brett', price: 0.1245, change24h: 22.1, chain: 'ethereum', address: '0x24d039e4813ad9001392aa78eff378b871c890da893' },
-  { symbol: 'NEIRO', name: 'Neiro', price: 0.00156, change24h: 31.5, chain: 'ethereum', address: '0x81e12DFd5293D8e347dFe59E90eFd55b2956a13439' },
+  { symbol: 'WIF', name: 'dogwifhat', price: 2.34, change24h: 15.3, chain: 'solana', address: 'EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm' },
+  { symbol: 'BONK', name: 'Bonk', price: 0.00002789, change24h: -1.8, chain: 'solana', address: 'DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263' },
+  { symbol: 'POPCAT', name: 'Popcat', price: 1.45, change24h: 8.9, chain: 'solana', address: '7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr' },
+  { symbol: 'PEPE', name: 'Pepe', price: 0.00001247, change24h: 12.4, chain: 'ethereum', address: '0x6982508145454ce325ddbe47a25d4ec3d2311933' },
+  { symbol: 'SHIB', name: 'Shiba Inu', price: 0.00002156, change24h: -3.2, chain: 'ethereum', address: '0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce' },
+  { symbol: 'FLOKI', name: 'Floki', price: 0.0001834, change24h: 8.7, chain: 'bsc', address: '0xfb5b838b6cfeedc2873ab27866079ac55363d37e' },
+  { symbol: 'DOGE', name: 'Dogecoin', price: 0.1523, change24h: 4.6, chain: 'bsc', address: '0xba2ae424d960c26247dd6c32edc70b295c744c43' },
+  { symbol: 'BRETT', name: 'Brett', price: 0.1245, change24h: 22.1, chain: 'ethereum', address: '0x532f27101965dd16442e59d40670faf5ebb142e4' },
+  { symbol: 'NEIRO', name: 'Neiro', price: 0.00156, change24h: 31.5, chain: 'ethereum', address: '0x812ba41e071c7b7fa4ebcfb62df5f45f6fa853ee' },
 ];
 
 // ===== Mock Token Data =====
