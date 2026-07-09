@@ -50,7 +50,6 @@ export default function TradeDashboard({ walletConnected, onConnectWallet, selec
   const [imageError, setImageError] = useState(false);
   const [logoUrl, setLogoUrl] = useState('');
 
-  // Load token data on mount OR when selectedToken prop changes
   useEffect(() => {
     setIsLoading(true);
     const targetToken = selectedToken || {
@@ -67,7 +66,6 @@ export default function TradeDashboard({ walletConnected, onConnectWallet, selec
     setLogoUrl('');
     setImageError(false);
 
-    // Fetch dynamic DexScreener API logo
     fetch(`https://api.dexscreener.com/latest/dex/tokens/${targetToken.address}`)
       .then(res => res.json())
       .then(data => {
@@ -121,7 +119,7 @@ export default function TradeDashboard({ walletConnected, onConnectWallet, selec
       .catch(err => console.error("Error searching token logo:", err));
 
     setTimeout(() => {
-      onSelectToken(null); // Clear selected token to prevent state mismatch
+      onSelectToken(null);
       setTokenData({
         name: 'Custom Asset',
         symbol: 'CUSTOM',
@@ -163,7 +161,6 @@ export default function TradeDashboard({ walletConnected, onConnectWallet, selec
 
   return (
     <motion.div variants={containerVariants} initial="hidden" animate="show" className="mx-auto max-w-[1440px] px-5 py-8 lg:px-8">
-      {/* Search Header */}
       <motion.div variants={itemVariants} className="mb-8">
         <div className="card p-2 shadow-card-md">
           <div className="flex flex-col sm:flex-row gap-2">
@@ -205,7 +202,6 @@ export default function TradeDashboard({ walletConnected, onConnectWallet, selec
         </div>
       ) : tokenData ? (
         <>
-          {/* Token Header */}
           <motion.div variants={itemVariants} className="mb-8">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div className="flex items-center gap-4">
@@ -263,7 +259,6 @@ export default function TradeDashboard({ walletConnected, onConnectWallet, selec
             </div>
           </motion.div>
 
-          {/* Stat Cards */}
           <motion.div variants={itemVariants} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
             {statCards.map((stat) => (
               <div key={stat.label} className="card-hover p-4">
@@ -284,9 +279,7 @@ export default function TradeDashboard({ walletConnected, onConnectWallet, selec
             ))}
           </motion.div>
 
-          {/* Main Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Chart Column */}
             <motion.div variants={itemVariants} className="lg:col-span-2 space-y-6">
               <div className="card p-5">
                 <div className="relative rounded-2xl border border-ww-border overflow-hidden bg-ww-card-alt h-[350px] md:h-[450px]">
@@ -299,7 +292,6 @@ export default function TradeDashboard({ walletConnected, onConnectWallet, selec
               </div>
             </motion.div>
 
-            {/* Sidebar Column (Swap & Security) */}
             <motion.div variants={itemVariants} className="space-y-6 lg:col-span-1">
               <SwapPanel
                 tokenSymbol={tokenData.symbol}
